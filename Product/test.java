@@ -5,93 +5,177 @@ import java.awt.*;
 import java.awt.event.*;
 
 public class test {
+    // Store user profile info
+    static String userName = "";
+    static String userAge = "";
+    static String userEmail = "";
+
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Financial Statement Calculator");
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(500, 400);
-        frame.setLayout(new GridLayout(7, 2, 10, 10));
+        // Main window with options
+        JFrame mainFrame = new JFrame("Main Menu");
+        mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        mainFrame.setSize(350, 200);
+        mainFrame.setLayout(new GridLayout(3, 1, 10, 10));
 
-        // Labels and text fields for input
-        JLabel assetsLabel = new JLabel("Enter Assets:");
-        JTextField assetsField = new JTextField();
+        JButton addProfileBtn = new JButton("Add User Profile");
+        JButton addFinancialBtn = new JButton("Add User Financial Info");
+        JButton helpBtn = new JButton("Help");
 
-        JLabel liabilitiesLabel = new JLabel("Enter Liabilities:");
-        JTextField liabilitiesField = new JTextField();
+        mainFrame.add(addProfileBtn);
+        mainFrame.add(addFinancialBtn);
+        mainFrame.add(helpBtn);
 
-        JLabel incomeLabel = new JLabel("Enter Income:");
-        JTextField incomeField = new JTextField();
+        mainFrame.setLocationRelativeTo(null);
+        mainFrame.setVisible(true);
 
-        JLabel expensesLabel = new JLabel("Enter Expenses:");
-        JTextField expensesField = new JTextField();
-
-        JButton calculateButton = new JButton("Calculate");
-        JLabel resultLabel = new JLabel("", SwingConstants.CENTER);
-
-        calculateButton.addActionListener(new ActionListener() {
+        // Add User Profile
+        addProfileBtn.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                try {
-                    double assets = Double.parseDouble(assetsField.getText());
-                    double liabilities = Double.parseDouble(liabilitiesField.getText());
-                    double income = Double.parseDouble(incomeField.getText());
-                    double expenses = Double.parseDouble(expensesField.getText());
+                JFrame profileFrame = new JFrame("User Profile");
+                profileFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                profileFrame.setSize(400, 250);
+                profileFrame.setLayout(new GridLayout(4, 2, 10, 10));
 
-                    double netWorth = assets - liabilities;
-                    double netIncome = income - expenses;
+                JLabel nameLabel = new JLabel("Enter Name:");
+                JTextField nameField = new JTextField();
 
-                    StringBuilder sb = new StringBuilder();
-                    sb.append("<html>");
-                    sb.append("Net Worth: ").append(netWorth).append("<br>");
-                    sb.append("Income Statement:<br>");
-                    sb.append("  Income: ").append(income).append("<br>");
-                    sb.append("  Expenses: ").append(expenses).append("<br>");
-                    sb.append("  Net Income: ").append(netIncome).append("<br>");
-                    sb.append("Assets: ").append(assets).append("<br>");
-                    sb.append("Liabilities: ").append(liabilities);
-                    sb.append("</html>");
+                JLabel ageLabel = new JLabel("Enter Age:");
+                JTextField ageField = new JTextField();
 
-                    // Show result and pie chart in a new window
-                    JFrame resultFrame = new JFrame("Calculation Result");
-                    resultFrame.setLayout(new BorderLayout());
+                JLabel emailLabel = new JLabel("Enter Email:");
+                JTextField emailField = new JTextField();
 
-                    JLabel resultContent = new JLabel(sb.toString(), SwingConstants.CENTER);
-                    resultFrame.add(resultContent, BorderLayout.NORTH);
+                JButton saveBtn = new JButton("Save");
 
-                    // Pie chart panel
-                    JPanel piePanel = new PieChartPanel(assets, liabilities, income, expenses);
-                    resultFrame.add(piePanel, BorderLayout.CENTER);
+                profileFrame.add(nameLabel);
+                profileFrame.add(nameField);
+                profileFrame.add(ageLabel);
+                profileFrame.add(ageField);
+                profileFrame.add(emailLabel);
+                profileFrame.add(emailField);
+                profileFrame.add(new JLabel());
+                profileFrame.add(saveBtn);
 
-                    resultFrame.setSize(400, 400);
-                    resultFrame.setLocationRelativeTo(frame);
-                    resultFrame.setVisible(true);
+                profileFrame.setLocationRelativeTo(mainFrame);
+                profileFrame.setVisible(true);
 
-                } catch (NumberFormatException ex) {
-                    // Show error in a new window
-                    JFrame errorFrame = new JFrame("Input Error");
-                    JLabel errorLabel = new JLabel("Please enter valid numbers for all fields.", SwingConstants.CENTER);
-                    errorFrame.add(errorLabel);
-                    errorFrame.setSize(300, 100);
-                    errorFrame.setLocationRelativeTo(frame);
-                    errorFrame.setVisible(true);
-                }
+                saveBtn.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        userName = nameField.getText();
+                        userAge = ageField.getText();
+                        userEmail = emailField.getText();
+                        JOptionPane.showMessageDialog(profileFrame, "Profile Saved!");
+                        profileFrame.dispose();
+                    }
+                });
             }
         });
 
-        // Add components to frame
-        frame.add(assetsLabel);
-        frame.add(assetsField);
-        frame.add(liabilitiesLabel);
-        frame.add(liabilitiesField);
-        frame.add(incomeLabel);
-        frame.add(incomeField);
-        frame.add(expensesLabel);
-        frame.add(expensesField);
-        frame.add(new JLabel()); // empty cell
-        frame.add(calculateButton);
-        frame.add(new JLabel()); // empty cell
-        frame.add(resultLabel);
+        // Add User Financial Info
+        addFinancialBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JFrame frame = new JFrame("Financial Statement Calculator");
+                frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+                frame.setSize(500, 500);
+                frame.setLayout(new GridLayout(6, 2, 10, 10));
 
-        frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
+                JLabel assetsLabel = new JLabel("Enter Assets:");
+                JTextField assetsField = new JTextField();
+
+                JLabel liabilitiesLabel = new JLabel("Enter Liabilities:");
+                JTextField liabilitiesField = new JTextField();
+
+                JLabel incomeLabel = new JLabel("Enter Income:");
+                JTextField incomeField = new JTextField();
+
+                JLabel expensesLabel = new JLabel("Enter Expenses:");
+                JTextField expensesField = new JTextField();
+
+                JButton calculateButton = new JButton("Calculate");
+                JLabel resultLabel = new JLabel("", SwingConstants.CENTER);
+
+                calculateButton.addActionListener(new ActionListener() {
+                    public void actionPerformed(ActionEvent e) {
+                        try {
+                            double assets = Double.parseDouble(assetsField.getText());
+                            double liabilities = Double.parseDouble(liabilitiesField.getText());
+                            double income = Double.parseDouble(incomeField.getText());
+                            double expenses = Double.parseDouble(expensesField.getText());
+
+                            double netWorth = assets - liabilities;
+                            double netIncome = income - expenses;
+
+                            StringBuilder sb = new StringBuilder();
+                            sb.append("<html>");
+                            sb.append("<b>User Profile</b><br>");
+                            sb.append("Name: ").append(userName).append("<br>");
+                            sb.append("Age: ").append(userAge).append("<br>");
+                            sb.append("Email: ").append(userEmail).append("<br><br>");
+                            sb.append("<b>Financial Statement</b><br>");
+                            sb.append("Net Worth: ").append(netWorth).append("<br>");
+                            sb.append("Income Statement:<br>");
+                            sb.append("  Income: ").append(income).append("<br>");
+                            sb.append("  Expenses: ").append(expenses).append("<br>");
+                            sb.append("  Net Income: ").append(netIncome).append("<br>");
+                            sb.append("Assets: ").append(assets).append("<br>");
+                            sb.append("Liabilities: ").append(liabilities);
+                            sb.append("</html>");
+
+                            // Show result and pie chart in a new window
+                            JFrame resultFrame = new JFrame("Calculation Result");
+                            resultFrame.setLayout(new BorderLayout());
+
+                            JLabel resultContent = new JLabel(sb.toString(), SwingConstants.CENTER);
+                            resultFrame.add(resultContent, BorderLayout.NORTH);
+
+                            // Pie chart panel
+                            JPanel piePanel = new PieChartPanel(assets, liabilities, income, expenses);
+                            resultFrame.add(piePanel, BorderLayout.CENTER);
+
+                            resultFrame.setSize(450, 450);
+                            resultFrame.setLocationRelativeTo(frame);
+                            resultFrame.setVisible(true);
+
+                        } catch (NumberFormatException ex) {
+                            // Show error in a new window
+                            JFrame errorFrame = new JFrame("Input Error");
+                            JLabel errorLabel = new JLabel("Please enter valid numbers for all fields.", SwingConstants.CENTER);
+                            errorFrame.add(errorLabel);
+                            errorFrame.setSize(300, 100);
+                            errorFrame.setLocationRelativeTo(frame);
+                            errorFrame.setVisible(true);
+                        }
+                    }
+                });
+
+                frame.add(assetsLabel);
+                frame.add(assetsField);
+                frame.add(liabilitiesLabel);
+                frame.add(liabilitiesField);
+                frame.add(incomeLabel);
+                frame.add(incomeField);
+                frame.add(expensesLabel);
+                frame.add(expensesField);
+                frame.add(new JLabel()); // empty cell
+                frame.add(calculateButton);
+                frame.add(new JLabel()); // empty cell
+                frame.add(resultLabel);
+
+                frame.setLocationRelativeTo(mainFrame);
+                frame.setVisible(true);
+            }
+        });
+
+        // Help button
+        helpBtn.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(mainFrame,
+                        "1. Add User Profile: Enter and save your name, age, and email.\n"
+                                + "2. Add User Financial Info: Enter your assets, liabilities, income, and expenses to calculate your net worth and view a pie chart.\n"
+                                + "3. Help: Show this help message.",
+                        "Help", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 }
 
