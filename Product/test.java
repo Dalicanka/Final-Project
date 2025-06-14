@@ -3,6 +3,9 @@ package Product;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.io.FileOutputStream;
+import com.itextpdf.text.*;
+import com.itextpdf.text.pdf.*;
 
 public class test {
     public static void main(String[] args) {
@@ -39,28 +42,25 @@ public class test {
                     double netIncome = income - expenses;
 
                     StringBuilder sb = new StringBuilder();
-                    sb.append("<html>");
-                    sb.append("Net Worth: ").append(netWorth).append("<br>");
-                    sb.append("Income Statement:<br>");
-                    sb.append("  Income: ").append(income).append("<br>");
-                    sb.append("  Expenses: ").append(expenses).append("<br>");
-                    sb.append("  Net Income: ").append(netIncome).append("<br>");
-                    sb.append("Assets: ").append(assets).append("<br>");
+                    sb.append("Net Worth: ").append(netWorth).append("\n");
+                    sb.append("Income Statement:\n");
+                    sb.append("  Income: ").append(income).append("\n");
+                    sb.append("  Expenses: ").append(expenses).append("\n");
+                    sb.append("  Net Income: ").append(netIncome).append("\n");
+                    sb.append("Assets: ").append(assets).append("\n");
                     sb.append("Liabilities: ").append(liabilities);
-                    sb.append("</html>");
 
                     // Show result and pie chart in a new window
                     JFrame resultFrame = new JFrame("Calculation Result");
                     resultFrame.setLayout(new BorderLayout());
 
-                    JLabel resultContent = new JLabel(sb.toString(), SwingConstants.CENTER);
+                    JLabel resultContent = new JLabel("<html>" + sb.toString().replace("\n", "<br>") + "</html>", SwingConstants.CENTER);
                     resultFrame.add(resultContent, BorderLayout.NORTH);
 
-                    // Pie chart panel
                     JPanel piePanel = new PieChartPanel(assets, liabilities, income, expenses);
                     resultFrame.add(piePanel, BorderLayout.CENTER);
 
-                    resultFrame.setSize(400, 400);
+                    resultFrame.setSize(400, 450);
                     resultFrame.setLocationRelativeTo(frame);
                     resultFrame.setVisible(true);
 
