@@ -1,8 +1,8 @@
 package Product;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import javax.swing.*;
 
 public class test {
     // Store user profile info
@@ -12,7 +12,7 @@ public class test {
 
     public static void main(String[] args) {
         // Main window with options
-        JFrame mainFrame = new JFrame("Main Menu");
+        JFrame mainFrame = new JFrame("Money Management System");
         mainFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         mainFrame.setSize(350, 200);
         mainFrame.setLayout(new GridLayout(3, 1, 10, 10));
