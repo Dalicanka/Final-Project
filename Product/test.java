@@ -49,11 +49,18 @@ public class test {
                     sb.append("Liabilities: ").append(liabilities);
                     sb.append("</html>");
 
-                    // Show result in a new window
+                    // Show result and pie chart in a new window
                     JFrame resultFrame = new JFrame("Calculation Result");
+                    resultFrame.setLayout(new BorderLayout());
+
                     JLabel resultContent = new JLabel(sb.toString(), SwingConstants.CENTER);
-                    resultFrame.add(resultContent);
-                    resultFrame.setSize(350, 250);
+                    resultFrame.add(resultContent, BorderLayout.NORTH);
+
+                    // Pie chart panel
+                    JPanel piePanel = new PieChartPanel(assets, liabilities, income, expenses);
+                    resultFrame.add(piePanel, BorderLayout.CENTER);
+
+                    resultFrame.setSize(400, 400);
                     resultFrame.setLocationRelativeTo(frame);
                     resultFrame.setVisible(true);
 
@@ -85,5 +92,77 @@ public class test {
 
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
+    }
+}
+
+// PieChartPanel class to draw a simple pie chart
+class PieChartPanel extends JPanel {
+    private double assets, liabilities, income, expenses;
+
+    public PieChartPanel(double assets, double liabilities, double income, double expenses) {
+        this.assets = assets;
+        this.liabilities = liabilities;
+        this.income = income;
+        this.expenses = expenses;
+        setPreferredSize(new Dimension(300, 200));
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        double total = assets + liabilities + income + expenses;
+        if (total == 0) return;
+
+        int width = 200;
+        int height = 200;
+        int x = 50;
+        int y = 10;
+
+        int startAngle = 0;
+
+        // Assets slice
+        int arcAngle = (int) Math.round((assets / total) * 360);
+        g.setColor(Color.GREEN);
+        g.fillArc(x, y, width, height, startAngle, arcAngle);
+        startAngle += arcAngle;
+
+        // Liabilities slice
+        arcAngle = (int) Math.round((liabilities / total) * 360);
+        g.setColor(Color.RED);
+        g.fillArc(x, y, width, height, startAngle, arcAngle);
+        startAngle += arcAngle;
+
+        // Income slice
+        arcAngle = (int) Math.round((income / total) * 360);
+        g.setColor(Color.BLUE);
+        g.fillArc(x, y, width, height, startAngle, arcAngle);
+        startAngle += arcAngle;
+
+        // Expenses slice
+        arcAngle = 360 - startAngle; // Ensure full circle
+        g.setColor(Color.ORANGE);
+        g.fillArc(x, y, width, height, startAngle, arcAngle);
+
+        // Legend
+        g.setColor(Color.BLACK);
+        g.drawString("Assets", x + width + 10, y + 20);
+        g.setColor(Color.GREEN);
+        g.fillRect(x + width + 60, y + 10, 15, 15);
+
+        g.setColor(Color.BLACK);
+        g.drawString("Liabilities", x + width + 10, y + 40);
+        g.setColor(Color.RED);
+        g.fillRect(x + width + 60, y + 30, 15, 15);
+
+        g.setColor(Color.BLACK);
+        g.drawString("Income", x + width + 10, y + 60);
+        g.setColor(Color.BLUE);
+        g.fillRect(x + width + 60, y + 50, 15, 15);
+
+        g.setColor(Color.BLACK);
+        g.drawString("Expenses", x + width + 10, y + 80);
+        g.setColor(Color.ORANGE);
+        g.fillRect(x + width + 60, y + 70, 15, 15);
     }
 }
