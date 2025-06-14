@@ -6,39 +6,67 @@ import java.awt.event.*;
 
 public class test {
     public static void main(String[] args) {
-        JFrame frame = new JFrame("Input GUI Example");
+        JFrame frame = new JFrame("Financial Statement Calculator");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(400, 250);
-        frame.setLayout(new GridLayout(4, 2, 10, 10));
+        frame.setSize(500, 400);
+        frame.setLayout(new GridLayout(7, 2, 10, 10));
 
-        JLabel textLabel = new JLabel("Enter text:");
-        JTextField textField = new JTextField();
+        // Labels and text fields for input
+        JLabel assetsLabel = new JLabel("Enter Assets:");
+        JTextField assetsField = new JTextField();
 
-        JLabel intLabel = new JLabel("Enter integer:");
-        JTextField intField = new JTextField();
+        JLabel liabilitiesLabel = new JLabel("Enter Liabilities:");
+        JTextField liabilitiesField = new JTextField();
 
-        JButton submitButton = new JButton("Submit");
+        JLabel incomeLabel = new JLabel("Enter Income:");
+        JTextField incomeField = new JTextField();
+
+        JLabel expensesLabel = new JLabel("Enter Expenses:");
+        JTextField expensesField = new JTextField();
+
+        JButton calculateButton = new JButton("Calculate");
         JLabel resultLabel = new JLabel("", SwingConstants.CENTER);
 
-        submitButton.addActionListener(new ActionListener() {
+        calculateButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                String text = textField.getText();
-                String intText = intField.getText();
                 try {
-                    int number = Integer.parseInt(intText);
-                    resultLabel.setText("Text: " + text + ", Integer: " + number);
+                    double assets = Double.parseDouble(assetsField.getText());
+                    double liabilities = Double.parseDouble(liabilitiesField.getText());
+                    double income = Double.parseDouble(incomeField.getText());
+                    double expenses = Double.parseDouble(expensesField.getText());
+
+                    double netWorth = assets - liabilities;
+                    double netIncome = income - expenses;
+
+                    StringBuilder sb = new StringBuilder();
+                    sb.append("<html>");
+                    sb.append("Net Worth: ").append(netWorth).append("<br>");
+                    sb.append("Income Statement:<br>");
+                    sb.append("  Income: ").append(income).append("<br>");
+                    sb.append("  Expenses: ").append(expenses).append("<br>");
+                    sb.append("  Net Income: ").append(netIncome).append("<br>");
+                    sb.append("Assets: ").append(assets).append("<br>");
+                    sb.append("Liabilities: ").append(liabilities);
+                    sb.append("</html>");
+
+                    resultLabel.setText(sb.toString());
                 } catch (NumberFormatException ex) {
-                    resultLabel.setText("Please enter a valid integer.");
+                    resultLabel.setText("Please enter valid numbers for all fields.");
                 }
             }
         });
 
-        frame.add(textLabel);
-        frame.add(textField);
-        frame.add(intLabel);
-        frame.add(intField);
+        // Add components to frame
+        frame.add(assetsLabel);
+        frame.add(assetsField);
+        frame.add(liabilitiesLabel);
+        frame.add(liabilitiesField);
+        frame.add(incomeLabel);
+        frame.add(incomeField);
+        frame.add(expensesLabel);
+        frame.add(expensesField);
         frame.add(new JLabel()); // empty cell
-        frame.add(submitButton);
+        frame.add(calculateButton);
         frame.add(new JLabel()); // empty cell
         frame.add(resultLabel);
 
