@@ -49,9 +49,22 @@ public class test {
                     sb.append("Liabilities: ").append(liabilities);
                     sb.append("</html>");
 
-                    resultLabel.setText(sb.toString());
+                    // Show result in a new window
+                    JFrame resultFrame = new JFrame("Calculation Result");
+                    JLabel resultContent = new JLabel(sb.toString(), SwingConstants.CENTER);
+                    resultFrame.add(resultContent);
+                    resultFrame.setSize(350, 250);
+                    resultFrame.setLocationRelativeTo(frame);
+                    resultFrame.setVisible(true);
+
                 } catch (NumberFormatException ex) {
-                    resultLabel.setText("Please enter valid numbers for all fields.");
+                    // Show error in a new window
+                    JFrame errorFrame = new JFrame("Input Error");
+                    JLabel errorLabel = new JLabel("Please enter valid numbers for all fields.", SwingConstants.CENTER);
+                    errorFrame.add(errorLabel);
+                    errorFrame.setSize(300, 100);
+                    errorFrame.setLocationRelativeTo(frame);
+                    errorFrame.setVisible(true);
                 }
             }
         });
