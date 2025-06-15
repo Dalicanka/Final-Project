@@ -61,9 +61,21 @@ public class test {
 
                 saveBtn.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                        userName = nameField.getText();
-                        userAge = ageField.getText();
-                        userEmail = emailField.getText();
+                        String name = nameField.getText().trim();
+                        String age = ageField.getText().trim();
+                        String email = emailField.getText().trim();
+
+                        if (name.isEmpty() || age.isEmpty() || email.isEmpty()) {
+                            JOptionPane.showMessageDialog(profileFrame,
+                                    "Please enter all fields (Name, Age, Email).",
+                                    "Input Error",
+                                    JOptionPane.ERROR_MESSAGE);
+                            return;
+                        }
+
+                        userName = name;
+                        userAge = age;
+                        userEmail = email;
                         JOptionPane.showMessageDialog(profileFrame, "Profile Saved!");
                         profileFrame.dispose();
                     }
